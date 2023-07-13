@@ -1,7 +1,5 @@
-// import fetchMovies from 'services/fetchMovies';
-
 const Movies = () => {
-  return;
+  return <></>;
 };
 
 export default Movies;
