@@ -4,6 +4,8 @@ import Notiflix from 'notiflix';
 import { getTrendingMovies } from 'services/fetchMovies';
 import FilmsList from 'components/filmsList/FilmsList';
 
+import { HomeTitle } from './Home.styled';
+
 const Home = () => {
   const [movies, setMovies] = useState([]);
 
@@ -19,7 +21,7 @@ const Home = () => {
 
   return (
     <>
-      <h2>Trending today</h2>
+      <HomeTitle>Trending today</HomeTitle>
       <FilmsList movies={movies} />
     </>
   );

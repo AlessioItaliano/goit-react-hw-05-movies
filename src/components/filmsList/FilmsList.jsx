@@ -1,18 +1,23 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { List, Item, LinkInfo } from './FilmsList.styled';
+import PropTypes from 'prop-types';
 
 const FilmsList = ({ movies }) => {
   const location = useLocation();
   return (
-    <ul>
+    <List>
       {movies.map(movie => (
-        <li key={movie.id}>
-          <Link to={`/movies/${movie.id}`} state={{ from: location }}>
+        <Item key={movie.id}>
+          <LinkInfo to={`/movies/${movie.id}`} state={{ from: location }}>
             {movie.title}
-          </Link>
-        </li>
+          </LinkInfo>
+        </Item>
       ))}
-    </ul>
+    </List>
   );
+};
+FilmsList.prototype = {
+  movies: PropTypes.array.isRequired,
 };
 
 export default FilmsList;

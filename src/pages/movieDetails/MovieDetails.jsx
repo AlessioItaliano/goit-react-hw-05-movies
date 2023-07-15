@@ -7,6 +7,19 @@ import Notiflix from 'notiflix';
 import { FiArrowLeft } from 'react-icons/fi';
 import { getMovieDetails } from 'services/fetchMovies';
 
+import {
+  Wrapper,
+  LinkBackBtn,
+  MainTitle,
+  Title,
+  Text,
+  Score,
+  MovieInfoBox,
+  MovieCard,
+  List,
+  AdditionalInfo,
+} from './MovieDetails.styled';
+
 const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
@@ -33,50 +46,55 @@ const MovieDetails = () => {
 
   return (
     <>
-      <Link to={backLinkHref}>
-        <FiArrowLeft size="20px" />
-        Back
-      </Link>
-      <div>
-        <h1>
-          {title} ({year})
-        </h1>
-        {poster_path ? (
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-            alt={title}
-          />
-        ) : (
-          <img
-            src="https://via.placeholder.com/150x150/CCCCCC/FFFFFF?text=No+Image"
-            alt="No Available Foto"
-          />
-        )}
-        <span>User score: {score}%</span>
-        <div>
-          <h2>Overview</h2>
-          {overview.length > 0 ? (
-            <p>{overview}</p>
-          ) : (
-            <p>We don't have any overview for this movie</p>
-          )}
-        </div>
-        <div>
-          <h2>Genres</h2>
-          <p>{genres.map(genre => genre.name).join(' ')}</p>
-        </div>
-      </div>
-
-      <div>
-        <h2>Additional information</h2>
-        <ul>
-          <Link to={`/movies/${movieId}/cast`}>Cast</Link>
-          <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
-        </ul>
+      <Wrapper>
+        <LinkBackBtn to={backLinkHref}>
+          <FiArrowLeft size="20px" />
+          Back
+        </LinkBackBtn>
+        <MovieCard>
+          <>
+            {poster_path ? (
+              <img
+                src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+                alt={title}
+              />
+            ) : (
+              <img
+                src="https://via.placeholder.com/150x150/CCCCCC/FFFFFF?text=No+Image"
+                alt="No Available Foto"
+              />
+            )}
+          </>
+          <MovieInfoBox>
+            <MainTitle>
+              {title} ({year})
+            </MainTitle>
+            <Score>User score: {score}%</Score>
+            <div>
+              <Title>Overview</Title>
+              {overview.length > 0 ? (
+                <Text>{overview}</Text>
+              ) : (
+                <Text>We don't have any overview for this movie</Text>
+              )}
+            </div>
+            <div>
+              <Title>Genres</Title>
+              <Text>{genres.map(genre => genre.name).join(' ')}</Text>
+            </div>
+          </MovieInfoBox>
+        </MovieCard>
+        <AdditionalInfo>
+          <Title>Additional information</Title>
+          <List>
+            <Link to={`/movies/${movieId}/cast`}>Cast</Link>
+            <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
+          </List>
+        </AdditionalInfo>
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
-      </div>
+      </Wrapper>
     </>
   );
 };

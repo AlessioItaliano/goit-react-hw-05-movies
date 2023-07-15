@@ -1,11 +1,12 @@
 import { FaRegSadTear } from 'react-icons/fa';
+import { Warning, Title } from './NotFoundPage.styled';
 
 const NotFoundPage = () => {
   return (
-    <>
-      <h1>Page not found</h1>
+    <Warning>
+      <Title>Page not found</Title>
       <FaRegSadTear size="120px" />
-    </>
+    </Warning>
   );
 };
 

@@ -23,7 +23,6 @@ export const HeaderLink = styled(NavLink)`
 &:hover,
   &:focus {
     color: red;
-    text-decoration: ;
 
   &.active {
     color: red;

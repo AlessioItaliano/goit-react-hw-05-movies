@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Notiflix from 'notiflix';
 
+import { Item, List, Name, Character } from './Cast.styled';
 import { getMovieCredits } from 'services/fetchMovies';
 
 const Cast = () => {
@@ -22,25 +23,29 @@ const Cast = () => {
 
   return (
     <>
-      <ul>
+      <List>
         {casts.map(cast => (
-          <li key={cast.id}>
+          <Item key={cast.id}>
             {cast.profile_path ? (
               <img
                 src={`https://image.tmdb.org/t/p/w500/${cast.profile_path}`}
                 alt={cast.name}
+                width="150px"
+                height="200px"
               />
             ) : (
               <img
                 src="https://via.placeholder.com/150x150/CCCCCC/FFFFFF?text=No+Image"
                 alt="No Available Foto"
+                width="150px"
+                height="200px"
               />
             )}
-            <p>{cast.name}</p>
-            <p>Character: {cast.character}</p>
-          </li>
+            <Name>{cast.name}</Name>
+            <Character>Character: {cast.character}</Character>
+          </Item>
         ))}
-      </ul>
+      </List>
     </>
   );
 };

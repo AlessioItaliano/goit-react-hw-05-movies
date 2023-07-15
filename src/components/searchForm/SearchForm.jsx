@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import Notiflix from 'notiflix';
+import { Form, FormInput, FormBtn } from './SearchForm.styled';
+import PropTypes from 'prop-types';
 
 const SearchForm = ({ onSubmit }) => {
-  const [query, setQuery] = useState(null);
+  const [query, setQuery] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
 
     if (query.trim() === '') {
       Notiflix.Notify.failure('Введіть фільм від якого неможливо відірватись!');
+      return;
     }
 
     onSubmit(query);
@@ -20,19 +23,23 @@ const SearchForm = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <Form onSubmit={handleSubmit}>
+      <FormInput
         name="query"
-        value={query || ''}
+        value={query}
         onChange={onChangeInput}
         type="text"
         autoComplete="off"
         autoFocus
         placeholder="Search movie"
       />
-      <button type="submit">Search</button>
-    </form>
+      <FormBtn type="submit">Search</FormBtn>
+    </Form>
   );
+};
+
+SearchForm.prototype = {
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default SearchForm;
