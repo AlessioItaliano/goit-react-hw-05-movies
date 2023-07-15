@@ -1,6 +1,5 @@
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useRef } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
-
 import Loader from 'components/loader';
 
 import Notiflix from 'notiflix';
@@ -25,8 +24,7 @@ const MovieDetails = () => {
   const { movieId } = useParams();
   const location = useLocation();
 
-  const backLinkHref = location.state?.from ?? '/movies';
-
+  const backLinkHref = useRef(location.state?.from ?? '/movies');
   useEffect(() => {
     getMovieDetails(movieId)
       .then(data => setMovie(data))
@@ -47,7 +45,7 @@ const MovieDetails = () => {
   return (
     <>
       <Wrapper>
-        <LinkBackBtn to={backLinkHref}>
+        <LinkBackBtn to={backLinkHref.current}>
           <FiArrowLeft size="20px" />
           Back
         </LinkBackBtn>
@@ -87,8 +85,8 @@ const MovieDetails = () => {
         <AdditionalInfo>
           <Title>Additional information</Title>
           <List>
-            <Link to={`/movies/${movieId}/cast`}>Cast</Link>
-            <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
+            <Link to={`cast`}>Cast</Link>
+            <Link to={`reviews`}>Reviews</Link>
           </List>
         </AdditionalInfo>
         <Suspense fallback={<Loader />}>

@@ -35,8 +35,8 @@ const Movies = () => {
       });
   }, [query]);
 
-  function onSubmit(value) {
-    setSearchParams({ query: `${value}` });
+  function onSubmit(query) {
+    setSearchParams({ query });
   }
 
   return (
