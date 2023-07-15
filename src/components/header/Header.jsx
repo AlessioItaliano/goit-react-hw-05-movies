@@ -1,18 +1,14 @@
-import { NavLink } from 'react-router-dom';
-
-// import { HeaderNav } from './Header.styled';
-import './Header.css';
+import { PageHeader, HeaderLink } from './Header.styled';
+// import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <div>
-      <NavLink className="navLink" to="/">
-        Home
-      </NavLink>
-      <NavLink className="navLink" to="/movies">
-        Movies
-      </NavLink>
-    </div>
+    <PageHeader>
+      <nav>
+        <HeaderLink to="/">Home</HeaderLink>
+        <HeaderLink to="/movies">Movies</HeaderLink>
+      </nav>
+    </PageHeader>
   );
 };
 

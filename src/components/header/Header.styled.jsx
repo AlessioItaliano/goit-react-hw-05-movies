@@ -1,10 +1,31 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
-export const HeaderNav = styled.div`
+export const PageHeader = styled.header`
   display: flex;
-  gap: 40;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  margin-bottom: 16px;
+  border-bottom: 1px solid black;
 `;
 
-export const NavLink = styled.a`
-  font-size: 30px;
+export const HeaderLink = styled(NavLink)`
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: black;
+  font-size: 24px;
+  font-weight: 500;
+  cursor: pointer;
+
+&:hover,
+  &:focus {
+    color: red;
+    text-decoration: ;
+
+  &.active {
+    color: red;
+  }
 `;

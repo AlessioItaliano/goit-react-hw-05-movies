@@ -1,17 +1,22 @@
-import { useState, useEffect } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
-import Notiflix from 'notiflix';
+import { useState, useEffect, Suspense } from 'react';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 
+import Loader from 'components/loader';
+
+import Notiflix from 'notiflix';
+import { FiArrowLeft } from 'react-icons/fi';
 import { getMovieDetails } from 'services/fetchMovies';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
+  const location = useLocation();
+
+  const backLinkHref = location.state?.from ?? '/movies';
 
   useEffect(() => {
     getMovieDetails(movieId)
       .then(data => setMovie(data))
-      // .then(data => console.log(data))
       .catch(() => {
         Notiflix.Notify.failure(
           'Упс, щось пішло не так...Спробуйте перезагрузити сторінку ще раз.'
@@ -21,12 +26,21 @@ const MovieDetails = () => {
 
   if (!movie) return;
 
-  const { title, poster_path, vote_average, overview, genres } = movie;
+  const { title, poster_path, vote_average, overview, genres, release_date } =
+    movie;
+  const score = Math.floor(vote_average * 10);
+  const year = release_date.slice(0, 4);
 
   return (
     <>
+      <Link to={backLinkHref}>
+        <FiArrowLeft size="20px" />
+        Back
+      </Link>
       <div>
-        <h1>{title}</h1>
+        <h1>
+          {title} ({year})
+        </h1>
         {poster_path ? (
           <img
             src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
@@ -38,10 +52,14 @@ const MovieDetails = () => {
             alt="No Available Foto"
           />
         )}
-        <span>User score: {(vote_average * 10).toFixed(1)}%</span>
+        <span>User score: {score}%</span>
         <div>
           <h2>Overview</h2>
-          <p>{overview}</p>
+          {overview.length > 0 ? (
+            <p>{overview}</p>
+          ) : (
+            <p>We don't have any overview for this movie</p>
+          )}
         </div>
         <div>
           <h2>Genres</h2>
@@ -55,7 +73,9 @@ const MovieDetails = () => {
           <Link to={`/movies/${movieId}/cast`}>Cast</Link>
           <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
         </ul>
-        <Outlet></Outlet>
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
       </div>
     </>
   );

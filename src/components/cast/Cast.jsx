@@ -11,7 +11,6 @@ const Cast = () => {
   useEffect(() => {
     getMovieCredits(movieId)
       .then(data => setCasts(data))
-      .then(data => console.log(data))
       .catch(() => {
         Notiflix.Notify.failure(
           'Упс, щось пішло не так...Спробуйте перезагрузити сторінку ще раз.'

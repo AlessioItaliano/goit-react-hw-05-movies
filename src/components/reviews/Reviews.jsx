@@ -11,7 +11,6 @@ const Reviews = () => {
   useEffect(() => {
     getMovieReviews(movieId)
       .then(data => setReviews(data))
-      .then(data => console.log(data))
       .catch(() => {
         Notiflix.Notify.failure(
           'Упс, щось пішло не так...Спробуйте перезагрузити сторінку ще раз.'
